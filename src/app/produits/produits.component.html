@@ -1,0 +1,84 @@
+<div class="container">
+  <h1> Fiche Produit </h1>
+  <form #produitForm="ngForm" (ngSubmit)="validerFormulaire(produitForm)">
+      <table>
+          <tr>
+              <td> Code: </td>
+              <td> <input type="text" name="code" [(ngModel)]="produitCourant.code" /> </td>
+          </tr>
+          <tr>
+              <td> Désignation: </td>
+              <td> <input type="text" name="designation" [(ngModel)]="produitCourant.designation" /> </td>
+          </tr>
+          <tr>
+              <td> Categorie: </td>
+              <td><select matNativeControl [(ngModel)]="produitCourant.categorie_id" name="categorie_id">
+                  <option value="" selected></option>
+                    <option *ngFor="let categorie of categories" [value]="categorie.id">{{categorie.libelle}}</option>
+                </select></td>
+          </tr>
+          <tr>
+              <td> Prix: </td>
+              <td> <input type="text" name="prix" [(ngModel)]="produitCourant.prix" /> </td>
+          </tr>
+          <tr>
+              <td [align]="'center'" colspan="2">
+                  <input type="submit" value="Valider" [disabled]="!produitForm.form.valid" />
+                  <button>Effacer</button>
+              </td>
+          </tr>
+      </table>
+  </form>
+</div>
+<div class="container center">
+  <h1> liste des produits </h1>
+  <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>
+                  <div>Code</div>
+                  <div><input type="text" placeholder="Code"  [(ngModel)]="filter.code"/></div>
+              </th>
+              <th>
+                  <div>Designation</div>
+                  <div><input type="text" placeholder="Designation"  [(ngModel)]="filter.designation"/></div>
+              </th>
+              <th>
+                  <div>Categorie</div>
+                  <div><input type="text" placeholder="Code"  [(ngModel)]="filter.categorieId"/></div>
+              </th>
+              <th>
+                  <div>Prix</div>
+                  <div><input type="text" placeholder="Code"  [(ngModel)]="filter.prix"/></div>
+              </th>
+              <th colspan="2">
+                  <div>Actions</div>
+                  <button (click) ="consulterProduits(filter)" class="btn btn-primary">
+                      <i class="bi bi-search"></i>
+                     Chercher
+                     </button>
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let p of produits">
+              <td> {{p.code}}</td>
+              <td> {{p.designation}}</td>
+              <td> {{p.categorie !== undefined && p.categorie !== null ? p.categorie.libelle : ''}}</td>
+              <td> {{p.prix}}</td>
+              <td>
+                  <button class="btn btn-dark">
+                      <i class="bi bi-pen"></i>
+                      Editer
+                     </button>
+              </td>
+              <td>
+                  <button (click) ="supprimerProduit(p)" class="btn btn-danger">
+                      <i class="bi bi-trash"></i>
+                     Supprimer
+                     </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
